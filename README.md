@@ -1,82 +1,145 @@
-# Simple Multi-Agent System with Google Gemini
 
-A simple multi-agent system using Google Gemini API as the LLM provider, inspired by Crew.AI concepts but without the dependency requirements.
+# Simple Agent Workflow with Google Gemini
 
-## Project Structure
+This project demonstrates a **multi-agent workflow** powered by **Google Gemini**.
+The workflow includes three agents — **Researcher, Writer, and Editor** — that collaborate to generate polished content from research to final output.
+
+The workflow is designed with **robust error handling, modular structure, input validation, JSON validation, and secure API management**.
+
+---
+
+## 🚀 Features
+
+* **Research Agent** – Gathers information based on a given research task description.
+* **Writer Agent** – Drafts an article using the research findings.
+* **Editor Agent** – Reviews and polishes the article for clarity and quality.
+* **Robust Error Handling** – Failures are caught, logged, and reported gracefully.
+* **Input Validation** – Ensures task descriptions and responses are valid.
+* **JSON Validation** – Validates response structure before processing.
+* **Security** – API keys are loaded from environment variables, not hardcoded.
+* **Logging** – Detailed logs are stored in `workflow.log`.
+* **Output Storage** – Saves research findings, draft article, and final article into `output.txt`.
+
+---
+
+## 📂 Project Structure
 
 ```
-├── agents.py          # Agent definitions
-├── tasks.py           # Task definitions
-├── main.py           # Main execution script
-├── requirements.txt   # Python dependencies
-├── env_example.txt    # Environment variables template
-└── README.md         # This file
+.
+├── agents/
+│   ├── researcher.py
+│   ├── writer.py
+│   └── editor.py
+├── tasks/
+│   ├── research_task_description.py
+│   ├── writing_task_description.py
+│   └── editing_task_description.py
+├── main.py
+├── .env
+├── workflow.log   (generated at runtime for errors and execution details)
+└── output.txt     (generated after successful workflow run)
 ```
 
-## Setup Instructions
+---
 
-### 1. Install Dependencies
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/simple-agent-gemini.git
+cd simple-agent-gemini
+```
+
+### 2. Create a virtual environment (recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate    # On Mac/Linux
+venv\Scripts\activate       # On Windows
+```
+
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Get Google Gemini API Key
+### 4. Configure environment variables
 
-1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create a new API key
-3. Copy the API key
-
-### 3. Configure Environment Variables
-
-Create a `.env` file in the project root and add your API key:
-
-```bash
-# Create .env file
-echo "GOOGLE_API_KEY=your_actual_api_key_here" > .env
-echo "GEMINI_MODEL=gemini-2.5-flash" >> .env
-```
-
-Or manually create a `.env` file with:
+Create a `.env` file in the project root and add your **Google Gemini API key**:
 
 ```
-GOOGLE_API_KEY=your_actual_api_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GOOGLE_API_KEY=your_api_key_here
 ```
 
-### 4. Run the Crew
+⚠️ **Do not commit your `.env` file** to version control.
+
+---
+
+## ▶️ Usage
+
+Run the workflow with:
 
 ```bash
 python main.py
 ```
 
-## How It Works
+The script will:
 
-This system consists of three agents working sequentially:
+1. Perform research
+2. Generate a draft article
+3. Edit the draft into a final version
+4. Save all results into `output.txt`
+5. Log execution details and errors into `workflow.log`
 
-1. **Research Analyst**: Gathers information about AI in healthcare using Google Gemini
-2. **Content Writer**: Creates an engaging article based on research findings
-3. **Content Editor**: Reviews and polishes the final content
+---
 
-The workflow produces a comprehensive article about "The Future of Artificial Intelligence in Healthcare" using Google Gemini 2.5 Flash model.
+## 📄 Output Example
 
-## Output
+After execution, `output.txt` will contain:
 
-The final result will be:
-- Displayed in the terminal
-- Saved to `output.txt` file
+```
+RESEARCH FINDINGS:
+==================================================
+...
 
-## Customization
+DRAFT ARTICLE:
+==================================================
+...
 
-You can easily modify:
-- **Topics**: Change the research topic in `tasks.py`
-- **Agents**: Add new agents or modify existing ones in `agents.py`
-- **Tasks**: Create new tasks or modify existing ones in `tasks.py`
-- **Model**: Change the Gemini model in the `.env` file
+FINAL ARTICLE:
+==================================================
+...
+```
 
-## Troubleshooting
+If an error occurs, check `workflow.log` for details.
 
-- Ensure your Google API key is valid and has access to Gemini
-- Check your internet connection
-- Verify all dependencies are installed correctly
+---
 
+## 🛡️ Error Handling & Validation
+
+* **Error Handling:** All workflow steps are wrapped in `try...except`, and errors are logged with stack traces in `workflow.log`.
+* **Input Validation:** Ensures task descriptions are non-empty strings before execution.
+* **JSON Validation:** Optional validation to ensure OpenAI/Gemini responses return valid JSON.
+* **Security:** API keys are stored in `.env` file using `python-dotenv`.
+
+---
+
+## 🛠️ Requirements
+
+* Python 3.9+
+* Google Gemini API key
+* Dependencies listed in `requirements.txt`
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please submit issues or pull requests to improve functionality.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
